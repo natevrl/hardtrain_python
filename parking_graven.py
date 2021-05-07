@@ -26,6 +26,7 @@ si c'est bon, rendre la voiture, sinon redemander
 """
 memoire_passcodes = {}
 
+
 def generate_passcode():
     numbers = random.sample(string.digits, 4)
     four_letters = random.sample(string.ascii_uppercase, 4)
@@ -48,7 +49,7 @@ def gestion_des_places(emplacements, etage):
         choix_du_client = int(input("choix incorrect, 1 ou 2 "))
     if choix_du_client == 1:
         emplacement_pour_garer = int(input("Emplacement souhaité :  ")) - 1
-        #gestion des erreurs
+        # gestion des erreurs
         while emplacement_pour_garer > len(emplacements):
             emplacement_pour_garer = int(input("Nous avons 27 places maximum ! :  ")) - 1
         while emplacements[emplacement_pour_garer] == VOITURE_GARE:
@@ -56,20 +57,22 @@ def gestion_des_places(emplacements, etage):
                 input("Desole, l'emplacement est deja prit !!!!! Selectionnez un autre : ")) - 1
 
         generate_key_dict = str(emplacement_pour_garer + 1) + "-" + str(etage)
-        #on ajoute au dictionnaire le passcode generer avec comme clé l'emplacement selectionner
+        # On ajoute au dictionnaire le passcode generer avec comme clé l'emplacement selectionné
         memoire_passcodes.update({generate_key_dict: generate_passcode()})
         emplacements[emplacement_pour_garer] = VOITURE_GARE
         print(f"Voiture Garé. VOTRE PASSCODE : {memoire_passcodes[generate_key_dict]} // RETENEZ LE BIEN !")
 
     elif choix_du_client == 2:
         emplacement_pour_reprendre = int(input("Emplacement de votre voiture : ")) - 1
+        # On demande le passcode et on créer une key du dict avec l'input
         passcode_client = input("ENTREZ VOTRE PASSCODE : ")
+        generate_key_dict = str(emplacement_pour_reprendre + 1) + "-" + str(etage)
         while emplacement_pour_reprendre > len(emplacements):
             emplacement_pour_reprendre = int(input("Nous avons 27 places maximum ! :  ")) - 1
-        if passcode_client == memoire_passcodes[emplacement_pour_reprendre+1]:
+        if passcode_client == memoire_passcodes[generate_key_dict]:
             emplacements[emplacement_pour_reprendre] = EMPLACEMENT_LIBRE
-            #on supprimer du dictionnaire le passcode
-            memoire_passcodes.pop(emplacement_pour_reprendre+1)
+            # on supprimer du dictionnaire le passcode
+            memoire_passcodes.pop(generate_key_dict)
             print("vous pouvez reprendre votre voiture")
         else:
             print("mauvais passcode, revenez plus tard")
