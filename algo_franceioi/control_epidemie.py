@@ -1,8 +1,9 @@
-la_plus_haute = []
-# game loop
-while True:
-    for i in range(8):
-        mountain_h = int(input())  # represents the height of one mountain.
-        la_plus_haute.append(mountain_h)
+population = int(input())
+jour = 0
+contamine = 1
 
-    print(max(la_plus_haute))
+while contamine < population:
+    jour += 1
+    contamine += contamine*2
+
+print(jour)
